@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="dash_pane" prefHeight="773.0" prefWidth="1128.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DashboardController">
+<AnchorPane fx:id="dash_pane" prefHeight="773.0" prefWidth="1128.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DashboardController">
     <JFXTabPane prefHeight="773" prefWidth="1128" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
             <Tab text="Sales">
@@ -380,7 +380,7 @@
                            <DropShadow color="#00000033" height="12.0" offsetY="1.0" radius="5.5" width="12.0" />
                         </effect>
                         <children>
-                           <TableView layoutX="33.0" layoutY="53.0" prefHeight="451.0" prefWidth="636.0" stylesheets="@style.css" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="53.0">
+                           <TableView layoutX="33.0" layoutY="51.0" prefHeight="453.0" prefWidth="636.0" stylesheets="@style.css" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="33.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="51.0">
                              <columns>
                                <TableColumn prefWidth="121.0" text="Product Name" />
                                <TableColumn prefWidth="124.0" text="Quantity" />
@@ -394,7 +394,7 @@
                            </TableView>
                            <AnchorPane layoutX="30.0" layoutY="-21.0" prefHeight="62.0" prefWidth="642.0" style="-fx-background-color: linear-gradient(to right,#45c7fb,#3141a1); -fx-background-radius: 5px;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
                               <effect>
-                                 <DropShadow color="#00000033" height="12.0" offsetY="1.0" radius="5.5" width="12.0" />
+                                 <DropShadow color="#00000057" height="30.0" offsetY="6.0" radius="14.5" width="30.0" />
                               </effect>
                               <children>
                                  <Label alignment="CENTER" layoutY="18.0" prefHeight="27.0" prefWidth="643.0" text="Sales Table" textFill="WHITE" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="18.0">
@@ -456,7 +456,7 @@
                               </TableView>
                               <AnchorPane layoutX="30.0" layoutY="-21.0" prefHeight="62.0" prefWidth="642.0" style="-fx-background-color: linear-gradient(to right,#45c7fb,#3141a1); -fx-background-radius: 5px;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
                                  <effect>
-                                    <DropShadow color="#00000033" height="12.0" offsetY="1.0" radius="5.5" width="12.0" />
+                                    <DropShadow color="#00000057" height="30.0" offsetX="1.0" offsetY="6.0" radius="14.5" width="30.0" />
                                  </effect>
                                  <children>
                                     <Label alignment="CENTER" layoutY="18.0" prefHeight="27.0" prefWidth="643.0" text="Expenses Table" textFill="WHITE" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="18.0">
@@ -518,7 +518,7 @@
                               </TableView>
                               <AnchorPane layoutX="30.0" layoutY="-21.0" prefHeight="62.0" prefWidth="642.0" style="-fx-background-color: linear-gradient(to right,#45c7fb,#3141a1); -fx-background-radius: 5px;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
                                  <effect>
-                                    <DropShadow color="#00000033" height="12.0" offsetY="1.0" radius="5.5" width="12.0" />
+                                    <DropShadow color="#00000057" height="30.0" offsetX="1.0" offsetY="6.0" radius="14.5" width="30.0" />
                                  </effect>
                                  <children>
                                     <Label alignment="CENTER" layoutY="18.0" prefHeight="27.0" prefWidth="643.0" text="Purchases Table" textFill="WHITE" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="18.0">
