@@ -1,18 +1,28 @@
 package sample.Controllers;
 
 import animatefx.animation.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.util.Callback;
+import sample.Objects.Sale;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,6 +36,20 @@ public class DashboardController implements Initializable {
             deki_no, remote_label, remote_idadi, remote_no, redio_label, redio_idadi, redio_no, spika_label, spika_idadi, spika_no, fan_label, fan_idadi, fan_no, taa_label, taa_idadi, taa_no, friji_label, friji_idadi, friji_no;
     @FXML
     ImageView tv_image, wire_image, tv_stand_image, mashuka_image, pasi_image, socket_image, deki_image, remote_image, redio_image, spika_image, fan_image, taa_image, friji_image;
+    @FXML
+    TableColumn<Sale, String> productName_col;
+    @FXML
+    TableColumn<Sale, String> quantity_col;
+    @FXML
+    TableColumn<Sale, String> cost_col;
+    @FXML
+    TableColumn<Sale, String> action_col;
+    @FXML
+    TableColumn<Sale, String> date_col;
+    @FXML
+    TableView<Sale> sales_table;
+
+    ObservableList<Sale> sales;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +67,149 @@ public class DashboardController implements Initializable {
         mouseEvents(fan_label, fan_idadi, fan_no, fan_image, fan_pane);
         mouseEvents(taa_label, taa_idadi, taa_no, taa_image, taa_pane);
         mouseEvents(friji_label, friji_idadi, friji_no, friji_image, friji_pane);
+
+        productName_col.setCellValueFactory(new PropertyValueFactory<>("product_name"));
+        quantity_col.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        cost_col.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        date_col.setCellValueFactory(new PropertyValueFactory<>("date"));
+        action_col.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
+
+        sales_table.setRowFactory(tableValue -> new TableRow<Sale>() {
+            @Override
+            public void updateItem(Sale item, boolean empty) {
+                super.updateItem(item, empty) ;
+                if (item == null) {
+                    setStyle("");
+                } else {
+                    setStyle("-fx-border-color: #E0E0E0; -fx-border-width: 0.7 0 0 0;");
+                }
+            }
+        });
+
+        Callback<TableColumn<Sale,String>, TableCell<Sale,String>> cellFactory =
+                new Callback<TableColumn<Sale, String>, TableCell<Sale, String>>() {
+                    @Override
+                    public TableCell<Sale, String> call(TableColumn<Sale, String> param) {
+                        final TableCell<Sale,String> cell = new TableCell<Sale,String>(){
+                            @Override
+                            protected void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if(empty){
+                                    setGraphic(null);
+                                    setText(null);
+                                }else{
+
+                                    ImageView viewImage = new ImageView(new Image(getClass().getResource("../Images/info.png").toString(), true));
+                                    viewImage.setFitHeight(24);
+                                    viewImage.setFitWidth(24);
+
+                                    ImageView deleteImage = new ImageView(new Image(getClass().getResource("../Images/delete.png").toString(), true));
+                                    deleteImage.setFitHeight(24);
+                                    deleteImage.setFitWidth(24);
+
+                                    ImageView editImage = new ImageView(new Image(getClass().getResource("../Images/edit.png").toString(), true));
+                                    editImage.setFitHeight(24);
+                                    editImage.setFitWidth(24);
+
+                                    DropShadow ds = new DropShadow();
+                                    ds.setSpread(0);
+                                    ds.setWidth(8);
+                                    ds.setHeight(8);
+                                    ds.setRadius(3.5);
+                                    ds.setOffsetY(1.0);
+                                    ds.setOffsetX(0.0);
+                                    ds.setColor(Color.web("#000000", 0.4));
+
+//                                    viewImage.resize(30, 24);
+//                                    viewImage.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, Color.rgb(0, 0, 0, 0.23), 10, 0, 0, 1));
+                                    viewImage.setEffect(ds);
+
+//                                    editImage.resize(30, 24);
+//                                    editImage.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, Color.rgb(0, 0, 0, 0.23), 10, 0, 0, 1));
+                                    editImage.setEffect(ds);
+
+//                                    deleteImage.resize(30, 24);
+//                                    deleteImage.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, Color.rgb(0, 0, 0, 0.23), 10, 0, 0, 1));
+                                    deleteImage.setEffect(ds);
+
+                                    viewImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            viewImage.setScaleY(1.3);
+                                            viewImage.setScaleX(1.3);
+                                        }
+                                    });
+
+                                    viewImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            viewImage.setScaleX(1);
+                                            viewImage.setScaleY(1);
+                                        }
+                                    });
+
+                                    deleteImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            deleteImage.setScaleY(1.3);
+                                            deleteImage.setScaleX(1.3);
+                                        }
+                                    });
+
+                                    deleteImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            deleteImage.setScaleX(1);
+                                            deleteImage.setScaleY(1);
+                                        }
+                                    });
+
+                                    editImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            editImage.setScaleY(1.3);
+                                            editImage.setScaleX(1.3);
+                                        }
+                                    });
+
+                                    editImage.setOnMouseExited(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            editImage.setScaleX(1);
+                                            editImage.setScaleY(1);
+                                        }
+                                    });
+
+                                    HBox hBox = new HBox();
+                                    hBox.getChildren().addAll(editImage, deleteImage, viewImage);
+                                    hBox.setAlignment(Pos.CENTER_LEFT);
+                                    hBox.setSpacing(12);
+                                    setGraphic(hBox);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        action_col.setCellFactory(cellFactory);
+
+        sales = FXCollections.observableArrayList(
+          new Sale("Television", "2", "1,500,000", "29/10/2019"),
+          new Sale("Radio", "4", "500,000", "29/10/2019"),
+          new Sale("Wire", "2", "35,000", "29/10/2019"),
+          new Sale("Television", "6", "3,235,000", "29/10/2019"),
+          new Sale("Socket", "20", "400,000", "29/10/2019"),
+          new Sale("Speaker", "2", "300,000", "29/10/2019"),
+          new Sale("Fan", "10", "500,000", "29/10/2019"),
+          new Sale("Iron", "2", "70,000", "29/10/2019")
+        );
+
+        TableView.TableViewSelectionModel tableViewSelectionModel = sales_table.getSelectionModel();
+
+        tableViewSelectionModel.setCellSelectionEnabled(true);
+        sales_table.setItems(sales);
 
     }
 
