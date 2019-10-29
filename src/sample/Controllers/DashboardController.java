@@ -100,8 +100,8 @@ public class DashboardController implements Initializable {
                                 }else{
 
                                     ImageView viewImage = new ImageView(new Image(getClass().getResource("../Images/info.png").toString(), true));
-                                    viewImage.setFitHeight(24);
-                                    viewImage.setFitWidth(24);
+                                    viewImage.setFitHeight(29.5);
+                                    viewImage.setFitWidth(29.5);
 
                                     ImageView deleteImage = new ImageView(new Image(getClass().getResource("../Images/delete.png").toString(), true));
                                     deleteImage.setFitHeight(24);
