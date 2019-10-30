@@ -192,10 +192,10 @@ public class DashboardController implements Initializable {
           new Sale("Radio", "4", "500,000", "29/10/2019"),
           new Sale("Wire", "2", "35,000", "29/10/2019"),
           new Sale("Television", "6", "3,235,000", "29/10/2019"),
-          new Sale("Socket", "20", "400,000", "29/10/2019"),
-          new Sale("Speaker", "2", "300,000", "29/10/2019"),
-          new Sale("Fan", "10", "500,000", "29/10/2019"),
-          new Sale("Iron", "2", "70,000", "29/10/2019")
+          new Sale("Socket", "20", "400,000", "28/10/2019"),
+          new Sale("Speaker", "2", "300,000", "28/10/2019"),
+          new Sale("Fan", "10", "500,000", "27/10/2019"),
+          new Sale("Iron", "2", "70,000", "27/10/2019")
         );
 
         TableView.TableViewSelectionModel tableViewSelectionModel = sales_table.getSelectionModel();
