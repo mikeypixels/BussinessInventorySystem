@@ -375,7 +375,7 @@
                               </children></AnchorPane>
                         </children>
                             </AnchorPane>
-                     <AnchorPane layoutX="417.0" layoutY="80.0" prefHeight="552.0" prefWidth="702.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="417.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="150.0">
+                     <AnchorPane layoutX="417.0" layoutY="80.0" prefHeight="521.0" prefWidth="702.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="417.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="150.0">
                         <effect>
                            <DropShadow color="#00000033" height="12.0" offsetY="1.0" radius="5.5" width="12.0" />
                         </effect>
