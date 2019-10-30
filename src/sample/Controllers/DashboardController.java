@@ -107,7 +107,7 @@ public class DashboardController implements Initializable {
                                     deleteImage.setFitHeight(24);
                                     deleteImage.setFitWidth(24);
 
-                                    ImageView editImage = new ImageView(new Image(getClass().getResource("../Images/edit.png").toString(), true));
+                                    ImageView editImage = new ImageView(new Image(getClass().getResource("../Images/edt.png").toString(), true));
                                     editImage.setFitHeight(24);
                                     editImage.setFitWidth(24);
 
@@ -120,16 +120,8 @@ public class DashboardController implements Initializable {
                                     ds.setOffsetX(0.0);
                                     ds.setColor(Color.web("#000000", 0.4));
 
-//                                    viewImage.resize(30, 24);
-//                                    viewImage.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, Color.rgb(0, 0, 0, 0.23), 10, 0, 0, 1));
                                     viewImage.setEffect(ds);
-
-//                                    editImage.resize(30, 24);
-//                                    editImage.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, Color.rgb(0, 0, 0, 0.23), 10, 0, 0, 1));
                                     editImage.setEffect(ds);
-
-//                                    deleteImage.resize(30, 24);
-//                                    deleteImage.setEffect(new DropShadow(BlurType.THREE_PASS_BOX, Color.rgb(0, 0, 0, 0.23), 10, 0, 0, 1));
                                     deleteImage.setEffect(ds);
 
                                     viewImage.setOnMouseEntered(new EventHandler<MouseEvent>() {
