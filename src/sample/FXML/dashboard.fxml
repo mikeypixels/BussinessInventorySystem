@@ -60,7 +60,7 @@
                                        <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
                                     </effect>
                                  </AnchorPane>
-                                 <AnchorPane fx:id="wire_pane" layoutX="133.0" layoutY="108.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
+                                 <AnchorPane fx:id="wire_pane" layoutX="133.5" layoutY="108.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
                                     <children>
                                        <Label fx:id="wire_label" layoutX="42.0" layoutY="56.0" text="Wire" />
                                        <ImageView fx:id="wire_image" fitHeight="50.0" fitWidth="56.0" layoutX="30.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
@@ -138,7 +138,7 @@
                                        <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
                                     </effect>
                                  </AnchorPane>
-                                 <AnchorPane fx:id="pasi_pane" layoutX="133.0" layoutY="211.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
+                                 <AnchorPane fx:id="pasi_pane" layoutX="133.5" layoutY="211.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
                                     <children>
                                        <Label fx:id="pasi_label" layoutX="42.0" layoutY="56.0" text="Pasi" />
                                        <ImageView fx:id="pasi_image" fitHeight="56.0" fitWidth="57.0" layoutX="21.0" pickOnBounds="true" preserveRatio="true">
@@ -216,7 +216,7 @@
                                        <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
                                     </effect>
                                  </AnchorPane>
-                                 <AnchorPane fx:id="remote_pane" layoutX="133.0" layoutY="314.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
+                                 <AnchorPane fx:id="remote_pane" layoutX="133.5" layoutY="314.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
                                     <children>
                                        <Label fx:id="remote_label" layoutX="31.0" layoutY="56.0" text="Remote" />
                                        <ImageView fx:id="remote_image" fitHeight="45.0" fitWidth="51.0" layoutX="29.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
@@ -294,7 +294,7 @@
                                        <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
                                     </effect>
                                  </AnchorPane>
-                                 <AnchorPane fx:id="fan_pane" layoutX="133.0" layoutY="417.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
+                                 <AnchorPane fx:id="fan_pane" layoutX="133.5" layoutY="417.0" prefHeight="96.0" prefWidth="109.0" style="-fx-background-color: #ffffff; -fx-background-radius: 4px;">
                                     <children>
                                        <Label fx:id="fan_label" layoutX="44.0" layoutY="56.0" text="Fan" />
                                        <ImageView fx:id="fan_image" fitHeight="47.0" fitWidth="56.0" layoutX="31.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
