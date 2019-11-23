@@ -68,7 +68,7 @@ public class MainWindowController implements Initializable {
         user_image.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                user_image.setImage(new Image(getClass().getResource("../Images/user_highlight.png").toString(), true));
+//                user_image.setImage(new Image(getClass().getResource("../Images/user_highlight.png").toString(), true));
                 user_image.setScaleX(1.2);
                 user_image.setScaleY(1.2);
             }
@@ -83,12 +83,12 @@ public class MainWindowController implements Initializable {
             }
         });
 
-        user_image.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                new Bounce(user_image).play();
-            }
-        });
+//        user_image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                new Bounce(user_image).play();
+//            }
+//        });
 
         DashboardClick();
         ManagementClick();

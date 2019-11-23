@@ -1,11 +1,14 @@
 package sample.Controllers;
 
 import animatefx.animation.*;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -22,15 +25,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+import sample.Handlers.DatabaseHandler;
 import sample.Objects.Sale;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
     @FXML
-    AnchorPane dash_pane, tv_pane, wire_pane, tv_stand_pane, mashuka_pane, pasi_pane, socket_pane, deki_pane, remote_pane, redio_pane, spika_pane, fan_pane, taa_pane, friji_pane, dash_item_pane;
+    AnchorPane sales_anchorpane, dash_pane, tv_pane, wire_pane, tv_stand_pane, mashuka_pane, pasi_pane, socket_pane, deki_pane, remote_pane, redio_pane, spika_pane, fan_pane, taa_pane, friji_pane, dash_item_pane, item_dash_holder;
     @FXML
     Label tv_label, tv_idadi, tv_no, wire_label, wire_idadi, wire_no, tv_stand_label, tv_stand_idadi, tv_stand_no, mashuka_label, mashuka_idadi, mashuka_no, pasi_label, pasi_idadi, pasi_no, socket_label, socket_idadi, socket_no, deki_label, deki_idadi,
             deki_no, remote_label, remote_idadi, remote_no, redio_label, redio_idadi, redio_no, spika_label, spika_idadi, spika_no, fan_label, fan_idadi, fan_no, taa_label, taa_idadi, taa_no, friji_label, friji_idadi, friji_no;
@@ -48,8 +53,19 @@ public class DashboardController implements Initializable {
     TableColumn<Sale, String> date_col;
     @FXML
     TableView<Sale> sales_table;
+    @FXML
+    Button exp_submit;
+    @FXML
+    JFXTextField exp_name, exp_cost, exp_desc;
+    @FXML
+    JFXDatePicker exp_date;
+    @FXML
+    Label exp_alert_txt;
 
     ObservableList<Sale> sales;
+    int user_id;
+
+    DatabaseHandler db = new DatabaseHandler();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,6 +84,16 @@ public class DashboardController implements Initializable {
         mouseEvents(taa_label, taa_idadi, taa_no, taa_image, taa_pane);
         mouseEvents(friji_label, friji_idadi, friji_no, friji_image, friji_pane);
 
+        exp_submit.setOnAction(event -> {
+            if (exp_name.getText().isEmpty() && exp_cost.getText().isEmpty() && exp_desc.getText().isEmpty()) {
+                exp_alert_txt.setText("Please fill all fields!");
+            } else {
+                user_id = 3;
+//                LocalDate date = exp_date.getValue();
+                db.addExpense(exp_name.getText(), Double.parseDouble(exp_cost.getText().replaceAll(",", "")), exp_desc.getText(), exp_date.getValue(), user_id);
+            }
+        });
+
         productName_col.setCellValueFactory(new PropertyValueFactory<>("product_name"));
         quantity_col.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         cost_col.setCellValueFactory(new PropertyValueFactory<>("cost"));
@@ -77,7 +103,7 @@ public class DashboardController implements Initializable {
         sales_table.setRowFactory(tableValue -> new TableRow<Sale>() {
             @Override
             public void updateItem(Sale item, boolean empty) {
-                super.updateItem(item, empty) ;
+                super.updateItem(item, empty);
                 if (item == null) {
                     setStyle("");
                 } else {
@@ -86,18 +112,18 @@ public class DashboardController implements Initializable {
             }
         });
 
-        Callback<TableColumn<Sale,String>, TableCell<Sale,String>> cellFactory =
+        Callback<TableColumn<Sale, String>, TableCell<Sale, String>> cellFactory =
                 new Callback<TableColumn<Sale, String>, TableCell<Sale, String>>() {
                     @Override
                     public TableCell<Sale, String> call(TableColumn<Sale, String> param) {
-                        final TableCell<Sale,String> cell = new TableCell<Sale,String>(){
+                        final TableCell<Sale, String> cell = new TableCell<Sale, String>() {
                             @Override
                             protected void updateItem(String item, boolean empty) {
                                 super.updateItem(item, empty);
-                                if(empty){
+                                if (empty) {
                                     setGraphic(null);
                                     setText(null);
-                                }else{
+                                } else {
 
                                     ImageView viewImage = new ImageView(new Image(getClass().getResource("../Images/info.png").toString(), true));
                                     viewImage.setFitHeight(29.5);
@@ -188,14 +214,19 @@ public class DashboardController implements Initializable {
         action_col.setCellFactory(cellFactory);
 
         sales = FXCollections.observableArrayList(
-          new Sale("Television", "2", "1,500,000", "29/10/2019"),
-          new Sale("Radio", "4", "500,000", "29/10/2019"),
-          new Sale("Wire", "2", "35,000", "29/10/2019"),
-          new Sale("Television", "6", "3,235,000", "29/10/2019"),
-          new Sale("Socket", "20", "400,000", "28/10/2019"),
-          new Sale("Speaker", "2", "300,000", "28/10/2019"),
-          new Sale("Fan", "10", "500,000", "27/10/2019"),
-          new Sale("Iron", "2", "70,000", "27/10/2019")
+                new Sale("Television", "2", "1,500,000", "29/10/2019"),
+                new Sale("Radio", "4", "500,000", "29/10/2019"),
+                new Sale("Wire", "2", "35,000", "29/10/2019"),
+                new Sale("Television", "6", "3,235,000", "29/10/2019"),
+                new Sale("Socket", "20", "400,000", "28/10/2019"),
+                new Sale("Speaker", "2", "300,000", "28/10/2019"),
+                new Sale("Fan", "10", "500,000", "27/10/2019"),
+                new Sale("Iron", "2", "70,000", "27/10/2019"),
+                new Sale("Speaker", "2", "680,000", "27/10/2019"),
+                new Sale("Iron", "2", "70,000", "27/10/2019"),
+                new Sale("Iron", "2", "90,000", "27/10/2019"),
+                new Sale("Socket", "2", "59,000", "27/10/2019"),
+                new Sale("Iron", "2", "70,000", "27/10/2019")
         );
 
         TableView.TableViewSelectionModel tableViewSelectionModel = sales_table.getSelectionModel();
@@ -205,7 +236,7 @@ public class DashboardController implements Initializable {
 
     }
 
-    public void mouseEvents(Label label1, Label label2, Label label3, ImageView imageView, AnchorPane pane){
+    public void mouseEvents(Label label1, Label label2, Label label3, ImageView imageView, AnchorPane pane) {
 
         Effect effect = tv_pane.getEffect();
 
@@ -319,10 +350,24 @@ public class DashboardController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 BounceOut out = new BounceOut(dash_item_pane);
-                out.setOnFinished(event1 -> {
+                try {
+                    AnchorPane add_sale_pane = FXMLLoader.load(getClass().getResource("../FXML/add_sales.fxml"));
+                    BounceIn in = new BounceIn(add_sale_pane);
+                    out.setOnFinished(event1 -> {
+                        sales_anchorpane.setTopAnchor(item_dash_holder, 75.0);
+                        item_dash_holder.getChildren().setAll(add_sale_pane);
+                        item_dash_holder.setBottomAnchor(add_sale_pane, 0.0);
+                        item_dash_holder.setTopAnchor(add_sale_pane, 0.0);
+                        item_dash_holder.setRightAnchor(add_sale_pane, 0.0);
+                        item_dash_holder.setLeftAnchor(add_sale_pane, 0.0);
+                        in.play();
+                    });
+                    out.play();
 
-                });
-                out.play();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
@@ -336,13 +381,13 @@ public class DashboardController implements Initializable {
         ds.setRadius(3.5);
         ds.setOffsetY(2.0);
         ds.setOffsetX(1.0);
-        ds.setColor(Color.web("#000000", 0.7));
+        ds.setColor(Color.web("#000000", 0.5));
 
         return ds;
 
     }
 
-    public void labelMouseEntered(Label label){
+    public void labelMouseEntered(Label label) {
 //        label.setTextFill(Color.WHITE);
         label.setScaleY(1.1);
         label.setScaleX(1.1);

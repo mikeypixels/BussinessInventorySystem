@@ -1,34 +1,220 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.ReportController">
+<AnchorPane prefHeight="889.0" prefWidth="1359.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.ReportController">
 
-    <JFXTabPane prefHeight="773" prefWidth="723.0" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <JFXTabPane prefHeight="950.0" prefWidth="1120.0" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-            <Tab text="Daily">
+            <Tab text="Evaluation" />
+            <Tab text="Statistical Evaluation">
                 <content>
                     <AnchorPane>
-
-                    </AnchorPane>
+                  <children>
+                     <AnchorPane layoutX="6.0" layoutY="40.0" prefHeight="628.0" prefWidth="667.0" style="-fx-background-color: #ffffff; -fx-background-radius: 13px;" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="447.0">
+                        <children>
+                           <LineChart fx:id="lineChart" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutX="39.0" layoutY="208.0" legendSide="RIGHT" prefHeight="379.0" prefWidth="589.0" style="-fx-background-color: #ffffff;" stylesheets="@style.css" verticalGridLinesVisible="false" verticalZeroLineVisible="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="39.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="208.0">
+                              <xAxis>
+                                 <CategoryAxis fx:id="month_category" side="BOTTOM" />
+                              </xAxis>
+                              <yAxis>
+                                 <NumberAxis fx:id="sales_figures" side="LEFT" />
+                              </yAxis>
+                           </LineChart>
+                           <Label layoutX="62.0" layoutY="29.0" text="REPORTS FOR YEAR:">
+                              <font>
+                                 <Font name="System Bold" size="16.0" />
+                              </font>
+                           </Label>
+                           <AnchorPane layoutX="62.0" layoutY="88.0" prefHeight="79.0" prefWidth="157.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;">
+                              <children>
+                                 <Pane prefHeight="81.0" prefWidth="5.0" style="-fx-background-color: #3d90d6;" />
+                                 <Label layoutX="33.0" layoutY="11.0" text="Current month" textFill="#9a9a9a">
+                                    <font>
+                                       <Font size="14.0" />
+                                    </font>
+                                 </Label>
+                                 <Label layoutX="21.0" layoutY="41.0" text="Tshs  24,000,000 " textFill="#3d90d6">
+                                    <font>
+                                       <Font name="System Bold" size="16.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                              <effect>
+                                 <DropShadow color="#00000033" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
+                              </effect></AnchorPane>
+                           <AnchorPane layoutX="279.0" layoutY="88.0" prefHeight="79.0" prefWidth="157.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;">
+                              <children>
+                                 <Pane prefHeight="81.0" prefWidth="5.0" />
+                                 <Label layoutX="30.0" layoutY="14.0" text="Previous month" textFill="#9a9a9a">
+                                    <font>
+                                       <Font size="14.0" />
+                                    </font>
+                                 </Label>
+                                 <Label layoutX="21.0" layoutY="41.0" text="Tshs  31,000,000 " textFill="#757575">
+                                    <font>
+                                       <Font name="System Bold" size="16.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                              <effect>
+                                 <DropShadow color="#00000033" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
+                              </effect></AnchorPane>
+                           <Circle fill="#3c99d6" layoutX="488.0" layoutY="96.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="171.0" />
+                           <Circle fill="#ff4081" layoutX="488.0" layoutY="129.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="171.0" />
+                           <Circle fill="#1ed760" layoutX="488.0" layoutY="161.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="171.0" />
+                           <Label layoutX="515.0" layoutY="88.0" text="Income" AnchorPane.rightAnchor="112.0" />
+                           <Label layoutX="515.0" layoutY="121.0" text="Expenses" AnchorPane.rightAnchor="107.0" />
+                           <Label layoutX="515.0" layoutY="153.0" text="Profit" AnchorPane.rightAnchor="123.0" />
+                           <JFXComboBox focusColor="#ff4081" layoutX="227.0" layoutY="29.0" prefWidth="150.0" />
+                        </children>
+                        <effect>
+                           <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
+                        </effect>
+                     </AnchorPane>
+                     <AnchorPane layoutX="5.0" layoutY="688.0" prefHeight="121.0" prefWidth="483.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="688.0">
+                        <effect>
+                           <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
+                        </effect></AnchorPane>
+                     <AnchorPane layoutX="776.0" layoutY="688.0" prefHeight="121.0" prefWidth="483.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="508.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="688.0">
+                        <effect>
+                           <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
+                        </effect>
+                        <children>
+                           <JFXTextArea focusColor="#ff4081" labelFloat="true" layoutX="25.0" layoutY="23.0" prefHeight="76.0" prefWidth="580.0" promptText="Comment" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="23.0">
+                              <font>
+                                 <Font size="14.0" />
+                              </font></JFXTextArea>
+                           <Button layoutX="686.0" layoutY="69.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="38.0" prefWidth="137.0" style="-fx-background-color: #45c7fb; -fx-background-radius: 40;" text="Submit" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="22.0">
+                              <font>
+                                 <Font name="System Bold" size="15.0" />
+                              </font>
+                           </Button>
+                           <Button layoutX="686.0" layoutY="14.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="38.0" prefWidth="137.0" style="-fx-background-color: #45c7fb; -fx-background-radius: 40;" text="View" textFill="WHITE" AnchorPane.bottomAnchor="69.0" AnchorPane.rightAnchor="22.0">
+                              <font>
+                                 <Font name="System Bold" size="15.0" />
+                              </font>
+                           </Button>
+                        </children>
+                     </AnchorPane>
+                     <AnchorPane layoutX="733.0" layoutY="40.0" prefHeight="628.0" prefWidth="417.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10px;" AnchorPane.rightAnchor="6.0">
+                        <effect>
+                           <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
+                        </effect>
+                        <children>
+                           <BarChart fx:id="barChart" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" layoutY="22.0" prefHeight="258.0" prefWidth="408.0" stylesheets="@style.css" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+                             <xAxis>
+                               <CategoryAxis fx:id="bar_month_figures" side="BOTTOM" />
+                             </xAxis>
+                             <yAxis>
+                               <NumberAxis fx:id="bar_sales_figures" side="LEFT" />
+                             </yAxis>
+                           </BarChart>
+                           <VBox layoutX="25.0" layoutY="445.0" prefHeight="165.0" prefWidth="373.0">
+                              <children>
+                                 <Label prefHeight="33.0" prefWidth="373.0" text="Product name          no. of items sold          Total in Tshs">
+                                    <font>
+                                       <Font name="System Bold Italic" size="14.0" />
+                                    </font></Label>
+                                 <Label prefHeight="17.0" prefWidth="373.0" text="Television                                 109                          150,000,000">
+                                    <font>
+                                       <Font size="13.0" />
+                                    </font></Label>
+                                 <Label prefHeight="17.0" prefWidth="373.0" text="Radio                                        97                             56,000,000">
+                                    <font>
+                                       <Font size="13.0" />
+                                    </font></Label>
+                                 <Label prefHeight="17.0" prefWidth="376.0" text="Deki                                          77                             32,450,000">
+                                    <font>
+                                       <Font size="13.0" />
+                                    </font></Label>
+                                 <Label prefWidth="375.0" text="Fan                                            73                             31,780,000">
+                                    <font>
+                                       <Font size="13.0" />
+                                    </font></Label>
+                                 <Label prefHeight="17.0" prefWidth="373.0" text="Friji                                            56                             31,780,000">
+                                    <font>
+                                       <Font size="13.0" />
+                                    </font>
+                                 </Label>
+                                 <AnchorPane prefHeight="36.0" prefWidth="373.0">
+                                    <children>
+                                       <Button layoutX="141.0" layoutY="10.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="23.0" prefWidth="91.0" style="-fx-background-color: #45c7fb; -fx-background-radius: 40;" text="View All" textFill="WHITE" AnchorPane.rightAnchor="141.0">
+                                          <font>
+                                             <Font name="System Bold" size="12.0" />
+                                          </font>
+                                       </Button>
+                                    </children>
+                                 </AnchorPane>
+                              </children>
+                           </VBox>
+                           <Label layoutX="133.0" layoutY="425.0" text="TOP 5 SOLD PRODUCTS">
+                              <font>
+                                 <Font name="System Bold" size="14.0" />
+                              </font>
+                           </Label>
+                           <AnchorPane layoutX="42.0" layoutY="300.0" prefHeight="85.0" prefWidth="332.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 4px;">
+                              <effect>
+                                 <DropShadow color="#00000045" height="8.0" offsetY="1.0" radius="3.5" width="8.0" />
+                              </effect>
+                              <children>
+                                 <Label layoutX="125.0" layoutY="4.0" text="Current year" textFill="#9a9a9a">
+                                    <font>
+                                       <Font size="14.0" />
+                                    </font>
+                                 </Label>
+                                 <Pane prefHeight="85.0" prefWidth="10.0" style="-fx-background-color: #3d90d6;" AnchorPane.leftAnchor="0.0" />
+                                 <Label layoutX="24.0" layoutY="29.0" text="Total Income:" />
+                                 <Label layoutX="24.0" layoutY="56.0" text="Total Profit:" />
+                                 <Label layoutX="178.0" layoutY="29.0" text="Total Expenses:" />
+                                 <Label layoutX="100.0" layoutY="27.0" text="120.26M" textFill="#3d90d6">
+                                    <font>
+                                       <Font name="System Bold" size="15.0" />
+                                    </font>
+                                 </Label>
+                                 <Label layoutX="100.0" layoutY="54.0" text="30.12M" textFill="#3d90d6">
+                                    <font>
+                                       <Font name="System Bold" size="15.0" />
+                                    </font>
+                                 </Label>
+                                 <Label layoutX="265.0" layoutY="27.0" text="90.14M" textFill="#3d90d6">
+                                    <font>
+                                       <Font name="System Bold" size="15.0" />
+                                    </font>
+                                 </Label>
+                                 <Label layoutX="224.0" layoutY="56.0" text="Amount In Tshs" textFill="#3d90d6">
+                                    <font>
+                                       <Font name="System Bold Italic" size="12.0" />
+                                    </font></Label>
+                              </children>
+                           </AnchorPane>
+                        </children>
+                     </AnchorPane>
+                  </children></AnchorPane>
                 </content>
             </Tab>
-            <Tab text="Monthly">
-                <content>
-                    <AnchorPane>
+<!--            <Tab text="Yearly">-->
+<!--                <content>-->
+<!--                    <AnchorPane>-->
 
-                    </AnchorPane>
-                </content>
-            </Tab>
-            <Tab text="Yearly">
-                <content>
-                    <AnchorPane>
-
-                    </AnchorPane>
-                </content>
-            </Tab>
+<!--                    </AnchorPane>-->
+<!--                </content>-->
+<!--            </Tab>-->
         </tabs>
     </JFXTabPane>
 
