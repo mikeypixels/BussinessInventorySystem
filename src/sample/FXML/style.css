@@ -67,6 +67,14 @@
     -fx-alignment: center-left;
 }
 
+.my-special-column-style .label {
+    -fx-alignment: CENTER;
+}
+
+.column-header.centerAlignedTableColumnHeader > .label {
+    -fx-alignment: center;
+}
+
 
 /* for bar chart designing */
 
@@ -143,5 +151,50 @@
 .default-color1.chart-series-line { -fx-stroke: #ff4081; }
 .default-color2.chart-series-line { -fx-stroke: #1ed760; }
 
+
+/* Textfield css styling */
+
+.text-field {
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 0 0 ;
+    -fx-background-radius: 5 ;
+}
+
+.loginTextField:focused {
+    -fx-background-color: -fx-background ;
+    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.3) , 8, 0.0 , 1 , 3 );
+    -fx-border-width: 0;
+}
+
+.date-picker > .text-field {
+    -fx-background-color: #ffffff;
+}
+
+
+/* separator style */
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 3px;
+}
+
+
+/* searchfield customized */
+
+.searchBoxLabel {
+    -fx-padding: 0 2 0 7;
+}
+.searchBoxLabelIcon {
+    -glyph-size: 13px;
+    -glyph-name: SEARCH;
+}
+
+.searchField {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #000000;
+    /*-fx-background-insets: 0 0 1 0 ;*/
+}
 
 

@@ -126,30 +126,23 @@ public class DatabaseHandler {
         return success;
     }
 
-    public boolean addSale(int product_id,String store,int quantity,double cost,LocalDate date){
-        String regExpSql = "INSERT INTO sales(product_id,store_id,quantity,cost,date) VALUES(?,?,?,?,?)";
-        String storeIdSlq = "SELECT * FROM STORES WHERE store_name='"+store+"'";
-        int store_id = 0;
+    public boolean addSale(int product_id,int quantity,double cost,LocalDate date){
+        String regExpSql = "INSERT INTO sales(product_id,quantity,cost,date) VALUES(?,?,?,?,?)";
+//        int store_id = 0;
         boolean success = false;
 
         try{
-            PreparedStatement pd = createConn().prepareStatement(storeIdSlq);
-            ResultSet rs = pd.executeQuery();
-            if(rs.first()){
-                store_id = rs.getInt("store_id");
-            }
 
             PreparedStatement ps = createConn().prepareStatement(regExpSql);
             ps.setInt(1,product_id);
-            ps.setInt(2,store_id);
-            ps.setInt(3,quantity);
-            ps.setDouble(4,cost);
-            ps.setDate(5,java.sql.Date.valueOf(date));
+            ps.setInt(2,quantity);
+            ps.setDouble(3,cost);
+            ps.setDate(4,java.sql.Date.valueOf(date));
 
             ps.execute();
 
             if(product_id==1||product_id==2){
-                success = reduceStock(store_id,1,quantity);
+                success = reduceStock(1,quantity);
             }else{
                 success = true;
             }
@@ -166,19 +159,12 @@ public class DatabaseHandler {
         return success;
     }
 
-    public int getQuantity(String store){
-        String storeIdSlq = "SELECT * FROM STORES WHERE store_name='"+store+"'";
-        int store_id = 0;
+    public int getQuantity(String id){
         int quantity = 0;
 
         try{
-            PreparedStatement pd = createConn().prepareStatement(storeIdSlq);
-            ResultSet rs = pd.executeQuery();
-            if(rs.first()){
-                store_id = rs.getInt("store_id");
-            }
 
-            String stockSql = "SELECT * FROM STOCKS WHERE store_id="+store_id;
+            String stockSql = "SELECT * FROM STOCKS WHERE product_id="+id;
             PreparedStatement ps = createConn().prepareStatement(stockSql);
             ResultSet rd = ps.executeQuery();
             if(rd.first()){
@@ -227,8 +213,8 @@ public class DatabaseHandler {
         return success;
     }
 
-    public boolean reduceStock(int store_id,int product_id,int quantity){
-        String stockSql = "SELECT * FROM stocks WHERE store_id="+store_id+" AND  product_id="+product_id;
+    public boolean reduceStock(int product_id,int quantity){
+        String stockSql = "SELECT * FROM stocks WHERE product_id="+product_id;
         boolean success;
         int new_quantity = 0;
 
@@ -240,7 +226,7 @@ public class DatabaseHandler {
             }
             new_quantity = new_quantity - quantity;
 
-            String sql = "UPDATE stocks SET available_quantity='"+new_quantity+"' WHERE store_id="+store_id+" AND  product_id="+product_id;
+            String sql = "UPDATE stocks SET available_quantity='"+new_quantity+"' WHERE product_id="+product_id;
             PreparedStatement ps = createConn().prepareStatement(sql);
             ps.execute();
             success=true;
@@ -292,42 +278,33 @@ public class DatabaseHandler {
         return success;
     }
 
-//    public ObservableList<Expense> loadExpenses(){
-//        ObservableList<Expense> expenses = FXCollections.observableArrayList();
-//        String expensesSql = "SELECT * FROM expenses";
-//
-//        try{
-//            PreparedStatement ps = createConn().prepareStatement(expensesSql);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()){
-//                int id = rs.getInt("id");
-//                String name = rs.getString("expense_name");
-//                String description = rs.getString("description");
-//                String date = rs.getString("date");
-//                String amount = String.format("%,.0f", rs.getDouble("cost"));
-//                int store_id = rs.getInt("store_id");
-//
-//                String storeIdSlq = "SELECT * FROM stores WHERE store_id="+store_id;
-//                PreparedStatement pd = createConn().prepareStatement(storeIdSlq);
-//                ResultSet rd = pd.executeQuery();
-//                String store = "";
-//                if(rd.first()){
-//                    store = rd.getString("store_name");
-//                }
-//
-//                expenses.add(new Expense(id, name,store,amount,description,date));
-//            }
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//        }finally {
-//            try {
-//                conn.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return expenses;
-//    }
+    public ObservableList<Expense> loadExpenses(){
+        ObservableList<Expense> expenses = FXCollections.observableArrayList();
+        String expensesSql = "SELECT * FROM expenses";
+
+        try{
+            PreparedStatement ps = createConn().prepareStatement(expensesSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("expense_name");
+                String description = rs.getString("description");
+                String date = rs.getString("date");
+                String amount = String.format("%,.0f", rs.getDouble("cost"));
+
+                expenses.add(new Expense(id, name,amount,description,date));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return expenses;
+    }
 
     public boolean addUser(String fname,String lname,String uname,String password,String gender,String role,String status){
         String userSql = "INSERT INTO USERS (f_name,l_name,username,password,gender,role,status) VALUES(?,?,?,?,?,?,?)";
@@ -371,6 +348,7 @@ public class DatabaseHandler {
         try {
             PreparedStatement ps = createConn().prepareStatement(statusSql);
             ps.execute();
+            System.out.println("success");
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -421,33 +399,33 @@ public class DatabaseHandler {
         return success;
     }
 
-//    public ObservableList<User> getUsers(String level){
-//        ObservableList<User> users = FXCollections.observableArrayList();
-//        String usersSql;
-//
-//        if(level.equals("Main Admin"))
-//            usersSql = "SELECT * FROM USERS";
-//        else
-//            usersSql = "SELECT * FROM USERS WHERE role='worker' ";
-//
-//        try{
-//            PreparedStatement ps = createConn().prepareStatement(usersSql);
-//            ResultSet rs = ps.executeQuery();
-//
-//            while (rs.next()){
-//                users.add(new User("USER/"+rs.getInt("id"),rs.getString("f_name")+" "+rs.getString("l_name"),rs.getString("status"),rs.getString("role")));
-//            }
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//        }finally {
-//            try {
-//                conn.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return users;
-//    }
+    public ObservableList<User> getUsers(String level){
+        ObservableList<User> users = FXCollections.observableArrayList();
+        String usersSql;
+
+        if(level.equals("Main Admin"))
+            usersSql = "SELECT * FROM USERS";
+        else
+            usersSql = "SELECT * FROM USERS WHERE role='worker' ";
+
+        try{
+            PreparedStatement ps = createConn().prepareStatement(usersSql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                users.add(new User("USER/"+rs.getInt("id"),rs.getString("f_name")+" "+rs.getString("l_name"),rs.getString("status"),rs.getString("role")));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return users;
+    }
 
     public JSONObject getPrices(){
         String sql = "SELECT * FROM PRICES";
@@ -479,48 +457,41 @@ public class DatabaseHandler {
         return jsonObject;
     }
 
-//    public ObservableList<Sale> loadSales(String store_name){
-//        ObservableList<Sale> sales = FXCollections.observableArrayList();
-//
-//        try{
-//            String storeIdSlq = "SELECT * FROM stores WHERE store_name='"+store_name+"'";
-//            PreparedStatement pd = createConn().prepareStatement(storeIdSlq);
-//            ResultSet rd = pd.executeQuery();
-//            int store_id = 0;
-//            if(rd.first()){
-//                store_id = rd.getInt("store_id");
-//            }
-//
-//            String salesSql = "SELECT * FROM sales WHERE store_id="+store_id;
-//            PreparedStatement ps = createConn().prepareStatement(salesSql);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()){
-//                int id = rs.getInt("id");
-//                int product_id = rs.getInt("product_id");
-//                String quantity = rs.getString("quantity");
-//                String date = rs.getString("date");
-//                String cost = String.format("%,.0f", rs.getDouble("cost"));
-//
-//                String productSql = "SELECT * FROM products WHERE product_id="+product_id;
-//                PreparedStatement pc = createConn().prepareStatement(productSql);
-//                ResultSet rc = pc.executeQuery();
-//                String product_name = "";
-//                if(rc.first()){
-//                    product_name = rc.getString("product_name");
-//                }
-//                sales.add(new Sale(id, product_name,quantity,cost,date));
-//            }
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//        }finally {
-//            try {
-//                conn.close();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return sales;
-//    }
+    public ObservableList<Sale> loadSales(){
+        ObservableList<Sale> sales = FXCollections.observableArrayList();
+
+        try{
+
+            String salesSql = "SELECT * FROM sales";
+            PreparedStatement ps = createConn().prepareStatement(salesSql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int id = rs.getInt("id");
+                int product_id = rs.getInt("product_id");
+                String quantity = rs.getString("quantity");
+                String date = rs.getString("date");
+                String cost = String.format("%,.0f", rs.getDouble("cost"));
+
+                String productSql = "SELECT * FROM products WHERE product_id="+product_id;
+                PreparedStatement pc = createConn().prepareStatement(productSql);
+                ResultSet rc = pc.executeQuery();
+                String product_name = "";
+                if(rc.first()){
+                    product_name = rc.getString("product_name");
+                }
+                sales.add(new Sale(String.valueOf(id) ,product_name,quantity,cost,date));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return sales;
+    }
 //
 //    public ObservableList<Purchase> loadPurchases(String store_name){
 //        ObservableList<Purchase> purchases = FXCollections.observableArrayList();

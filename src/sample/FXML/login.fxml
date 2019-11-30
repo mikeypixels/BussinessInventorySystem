@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="822.0" prefWidth="1357.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.LoginController">
+   <children>
+      <ImageView fitHeight="840.0" fitWidth="1400.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../Images/bg4.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="312.0" layoutY="80.0" prefHeight="672.0" prefWidth="734.0" style="-fx-background-color: linear-gradient(to right,#45c7fb,#3141a1); -fx-background-radius: 5;">
+         <children>
+            <AnchorPane layoutX="149.0" layoutY="155.0" prefHeight="465.0" prefWidth="437.0" style="-fx-background-color: #ffffff; -fx-background-radius: 12;">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="144.0" layoutX="169.0" layoutY="-50.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@../Images/circle_user.png" />
+                      </image>
+                     <effect>
+                        <DropShadow color="#00000033" />
+                     </effect>
+                  </ImageView>
+                  <ImageView fitHeight="48.0" fitWidth="46.0" layoutX="196.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@../Images/user_login.png" />
+                      </image>
+                  </ImageView>
+                  <TextField fx:id="uname_field" layoutX="69.0" layoutY="140.0" prefHeight="46.0" prefWidth="300.0" stylesheets="@style.css">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                  <PasswordField fx:id="pass_field" layoutX="69.0" layoutY="244.0" prefHeight="46.0" prefWidth="300.0" stylesheets="@style.css">
+                     <font>
+                        <Font size="14.0" />
+                     </font></PasswordField>
+                  <JFXButton fx:id="login_btn" buttonType="RAISED" layoutX="128.0" layoutY="349.0" onAction="#onClick" prefHeight="49.0" prefWidth="183.0" style="-fx-background-color: #3149a1; -fx-background-radius: 60;" text="Login" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </JFXButton>
+                  <Label layoutX="69.0" layoutY="112.0" text="Username" textFill="#828282" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="310.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="69.0" layoutY="216.0" text="Password" textFill="#828282" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="313.0">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="action_txt" alignment="CENTER" contentDisplay="CENTER" layoutY="423.0" prefHeight="17.0" prefWidth="437.0" text="Label" textAlignment="CENTER" textFill="RED">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Label>
+               </children>
+               <effect>
+                  <DropShadow color="#000000b2" offsetY="1.0" />
+               </effect>
+            </AnchorPane>
+            <Label layoutX="240.0" layoutY="35.0" text="Biashara Inventory" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="29.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow color="#00000080" height="100.0" offsetY="8.0" radius="49.5" width="100.0" />
+         </effect>
+      </AnchorPane>
+   </children>
+</AnchorPane>

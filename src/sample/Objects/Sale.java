@@ -4,13 +4,14 @@ import javafx.beans.property.SimpleStringProperty;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 public class Sale {
-    private SimpleStringProperty product_name, quantity, cost, date;
+    private SimpleStringProperty id, product_name, quantity, cost, date;
 
-    public Sale(String product_name, String quantity, String cost, String date) {
+    public Sale(String id, String product_name, String quantity, String cost, String date) {
         this.product_name = new SimpleStringProperty(product_name);
         this.quantity = new SimpleStringProperty(quantity);
         this.cost = new SimpleStringProperty(cost);
         this.date = new SimpleStringProperty(date);
+        this.id = new SimpleStringProperty(id);
     }
 
     public String getProduct_name() {
@@ -59,5 +60,17 @@ public class Sale {
 
     public void setDate(String date) {
         this.date.set(date);
+    }
+
+    public String getId() {
+        return id.get();
+    }
+
+    public SimpleStringProperty idProperty() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id.set(id);
     }
 }

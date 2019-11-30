@@ -19,7 +19,7 @@
                   <DropShadow color="#00000080" height="12.0" offsetY="1.0" radius="5.5" width="12.0" />
                </effect>
             </ImageView>
-            <Label alignment="CENTER_RIGHT" layoutX="1236.0" layoutY="37.0" prefHeight="19.0" prefWidth="92.0" text="Michael Apina" wrapText="true" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="37.0">
+            <Label fx:id="fullName_txt" alignment="CENTER_RIGHT" layoutX="1236.0" layoutY="37.0" prefHeight="19.0" prefWidth="92.0" text="Michael Apina" wrapText="true" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="37.0">
                <font>
                   <Font size="13.0" />
                </font>

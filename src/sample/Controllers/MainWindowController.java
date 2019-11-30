@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,6 +22,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,15 +34,23 @@ public class MainWindowController implements Initializable {
     @FXML
     ImageView dash_image, management_image, report_image, exit_image, user_image;
     @FXML
-    Label dash_txt, management_txt, report_txt, exit_txt, txt;
+    Label dash_txt, management_txt, report_txt, exit_txt, txt, fullName_txt;
     @FXML
     AnchorPane main_pane;
+
+    JSONObject userCredentials;
     int check = 0;
 
     AnchorPane pane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        try{
+            fullName_txt.setText(LoginController.userObject.get("fname") + " " + LoginController.userObject.get("lname"));
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
 
         dash_txt.setTextFill(Color.WHITE);
         dash_txt.setScaleY(1.2);
@@ -51,6 +62,18 @@ public class MainWindowController implements Initializable {
         check = 1;
 
         try {
+            if(LoginController.userObject.getString("role").equals("Main Admin")||LoginController.userObject.getString("role").equals("Admin")){
+                management_image.setVisible(true);
+                management_txt.setVisible(true);
+                report_image.setVisible(true);
+                report_txt.setVisible(true);
+            }else{
+                management_image.setVisible(false);
+                management_txt.setVisible(false);
+                report_txt.setVisible(false);
+                report_image.setVisible(false);
+            }
+
             pane = FXMLLoader.load(getClass().getResource("../FXML/dashboard.fxml"));
 //            pane.setPrefHeight(795);
 //            pane.setPrefWidth(1343);
@@ -59,18 +82,16 @@ public class MainWindowController implements Initializable {
             main_pane.setTopAnchor(pane, 0.0);
             main_pane.setRightAnchor(pane, 0.0);
             main_pane.setLeftAnchor(pane, 0.0);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        main_pane.getChildren().add();
 
         user_image.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-//                user_image.setImage(new Image(getClass().getResource("../Images/user_highlight.png").toString(), true));
                 user_image.setScaleX(1.2);
                 user_image.setScaleY(1.2);
+//                user_image.setEffect(addPaneEffect());
             }
         });
 
