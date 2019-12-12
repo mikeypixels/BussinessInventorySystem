@@ -1,12 +1,9 @@
-package sample.Controllers;
+package sample;
 
 import animatefx.animation.*;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,14 +11,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,10 +35,21 @@ public class MainWindowController implements Initializable {
     @FXML
     Label dash_txt, management_txt, report_txt, exit_txt, txt, fullName_txt;
     @FXML
-    AnchorPane main_pane;
+    AnchorPane main_window_anchor;
+    @FXML
+    StackPane main_pane;
+    @FXML
+    BorderPane borderPane;
+    @FXML
+    VBox user_pane;
+    @FXML
+    JFXButton change_pass_btn, logout_btn;
 
     JSONObject userCredentials;
+
     int check = 0;
+
+    int dash_pop_check = 0;
 
     AnchorPane pane;
 
@@ -52,10 +62,21 @@ public class MainWindowController implements Initializable {
             e.printStackTrace();
         }
 
+//        borderPane.centerProperty().addListener(
+//                (ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+////                    main_window_anchor.setPrefWidth( newValue.doubleValue() );
+//                }
+//        );
+
+        btn_effects(logout_btn);
+        btn_effects(change_pass_btn);
+
+        user_pane.setVisible(false);
+
         dash_txt.setTextFill(Color.WHITE);
         dash_txt.setScaleY(1.2);
         dash_txt.setScaleX(1.2);
-        dash_image.setImage(new Image(getClass().getResource("../Images/home_.png").toString(), true));
+        dash_image.setImage(new Image(getClass().getResource("Images/home_.png").toString(), true));
         dash_image.setScaleX(1.2);
         dash_image.setScaleY(1.2);
 
@@ -74,14 +95,10 @@ public class MainWindowController implements Initializable {
                 report_image.setVisible(false);
             }
 
-            pane = FXMLLoader.load(getClass().getResource("../FXML/dashboard.fxml"));
+            pane = FXMLLoader.load(getClass().getResource("FXML/dashboard.fxml"));
 //            pane.setPrefHeight(795);
 //            pane.setPrefWidth(1343);
             main_pane.getChildren().setAll(pane);
-            main_pane.setBottomAnchor(pane, 0.0);
-            main_pane.setTopAnchor(pane, 0.0);
-            main_pane.setRightAnchor(pane, 0.0);
-            main_pane.setLeftAnchor(pane, 0.0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,7 +115,7 @@ public class MainWindowController implements Initializable {
         user_image.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                user_image.setImage(new Image(getClass().getResource("../Images/user.png").toString(), true));
+                user_image.setImage(new Image(getClass().getResource("Images/user.png").toString(), true));
                 user_image.setScaleX(1);
                 user_image.setScaleY(1);
             }
@@ -111,26 +128,83 @@ public class MainWindowController implements Initializable {
 //            }
 //        });
 
+        user_image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(dash_pop_check == 0){
+                    user_pane.setVisible(true);
+                    dash_pop_check = 1;
+                }else{
+                    user_pane.setVisible(false);
+                    dash_pop_check = 0;
+                }
+            }
+        });
+
         DashboardClick();
         ManagementClick();
         ReportClick();
         ExitClick();
 
-        mouseEvents(dash_txt, dash_image, "../Images/home_.png", "../Images/home.png", 1);
-        mouseEvents(management_txt, management_image, "../Images/admin_settings_.png", "../Images/admin_settings.png", 2);
-        mouseEvents(report_txt, report_image, "../Images/business_report_.png", "../Images/business_report.png", 3);
-        mouseEvents(exit_txt, exit_image, "../Images/shutdown_.png", "../Images/shutdown.png", 4);
+        mouseEvents(dash_txt, dash_image, "Images/home_.png", "Images/home.png", 1);
+        mouseEvents(management_txt, management_image, "Images/admin_settings_.png", "Images/admin_settings.png", 2);
+        mouseEvents(report_txt, report_image, "Images/business_report_.png", "Images/business_report.png", 3);
+        mouseEvents(exit_txt, exit_image, "Images/shutdown_.png", "Images/shutdown.png", 4);
+    }
+
+    public void btn_effects(JFXButton button){
+        button.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                button.setStyle("-fx-background-color: #45c7fb; -fx-text-fill: #ffffff");
+            }
+        });
+
+        button.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                button.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000");
+            }
+        });
+    }
+
+    public void logout(){
+        try {
+            Stage stage = (Stage) logout_btn.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("FXML/login.fxml"));
+            stage.setTitle("Bussiness Inventory System");
+            stage.setMaximized(false);
+            Scene loginScene = new Scene(root,1392,822);
+            stage.setScene(loginScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changePassword(){
+        try {
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("FXML/change_password.fxml"));
+            stage.setTitle("Bussiness Inventory System");
+            Scene changePasswordScene = new Scene(fxmlLoader1.load(),600,426);
+            stage.setScene(changePasswordScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void mouseClicks(int prev){
         if(prev == 1){
-            beforeClick(dash_txt, dash_image, "../Images/home.png");
+            beforeClick(dash_txt, dash_image, "Images/home.png");
         }else if(prev == 2){
-            beforeClick(management_txt, management_image, "../Images/admin_settings.png");
+            beforeClick(management_txt, management_image, "Images/admin_settings.png");
         }else if(prev == 3){
-            beforeClick(report_txt, report_image, "../Images/business_report.png");
+            beforeClick(report_txt, report_image, "Images/business_report.png");
         }else if(prev == 4){
-            beforeClick(exit_txt, exit_image, "../Images/shutdown.png");
+            beforeClick(exit_txt, exit_image, "Images/shutdown.png");
         }
     }
 
@@ -180,35 +254,35 @@ public class MainWindowController implements Initializable {
         });
 
 //        if(ch != check){
-            label.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
+        label.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
 
-                    if(ch != check){
-                        label.setTextFill(Color.web("#c0c0c0"));
-                        label.setScaleX(1);
-                        label.setScaleY(1);
-                        imageView.setImage(new Image(getClass().getResource(url_exit).toString(), true));
-                        imageView.setScaleX(1);
-                        imageView.setScaleY(1);
-                    }
-
+                if(ch != check){
+                    label.setTextFill(Color.web("#c0c0c0"));
+                    label.setScaleX(1);
+                    label.setScaleY(1);
+                    imageView.setImage(new Image(getClass().getResource(url_exit).toString(), true));
+                    imageView.setScaleX(1);
+                    imageView.setScaleY(1);
                 }
-            });
 
-            imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if(ch != check){
-                        label.setTextFill(Color.web("#c0c0c0"));
-                        label.setScaleX(1);
-                        label.setScaleY(1);
-                        imageView.setImage(new Image(getClass().getResource(url_exit).toString(), true));
-                        imageView.setScaleX(1);
-                        imageView.setScaleY(1);
-                    }
+            }
+        });
+
+        imageView.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(ch != check){
+                    label.setTextFill(Color.web("#c0c0c0"));
+                    label.setScaleX(1);
+                    label.setScaleY(1);
+                    imageView.setImage(new Image(getClass().getResource(url_exit).toString(), true));
+                    imageView.setScaleX(1);
+                    imageView.setScaleY(1);
                 }
-            });
+            }
+        });
 //        }
 
     }
@@ -221,18 +295,17 @@ public class MainWindowController implements Initializable {
 
                 txt.setText("Dashboard");
                 mouseClicks(check);
-                afterClick(dash_txt, dash_image, "../Images/home_.png");
+                afterClick(dash_txt, dash_image, "Images/home_.png");
 
                 try{
                     if(check != 1){
-                        Parent root = FXMLLoader.load(getClass().getResource("../FXML/management.fxml"));
-                        pane = FXMLLoader.load(getClass().getResource("../FXML/dashboard.fxml"));
+                        pane = FXMLLoader.load(getClass().getResource("FXML/dashboard.fxml"));
                         pane.setStyle("-fx-background-color: #f3f3f3");
                         main_pane.getChildren().add(pane);
-                        main_pane.setBottomAnchor(pane, 0.0);
-                        main_pane.setTopAnchor(pane, 0.0);
-                        main_pane.setRightAnchor(pane, 0.0);
-                        main_pane.setLeftAnchor(pane, 0.0);
+//                        main_pane.setBottomAnchor(pane, 0.0);
+//                        main_pane.setTopAnchor(pane, 0.0);
+//                        main_pane.setRightAnchor(pane, 0.0);
+//                        main_pane.setLeftAnchor(pane, 0.0);
                         new FadeIn(main_pane).play();
 
                         check = 1;
@@ -250,18 +323,17 @@ public class MainWindowController implements Initializable {
 
                 txt.setText("Dashboard");
                 mouseClicks(check);
-                afterClick(dash_txt, dash_image, "../Images/home_.png");
+                afterClick(dash_txt, dash_image, "Images/home_.png");
 
                 try{
                     if(check != 1){
-                        Parent root = FXMLLoader.load(getClass().getResource("../FXML/management.fxml"));
-                        pane = FXMLLoader.load(getClass().getResource("../FXML/dashboard.fxml"));
+                        pane = FXMLLoader.load(getClass().getResource("FXML/dashboard.fxml"));
                         pane.setStyle("-fx-background-color: #f3f3f3");
                         main_pane.getChildren().add(pane);
-                        main_pane.setBottomAnchor(pane, 0.0);
-                        main_pane.setTopAnchor(pane, 0.0);
-                        main_pane.setRightAnchor(pane, 0.0);
-                        main_pane.setLeftAnchor(pane, 0.0);
+//                        main_pane.setBottomAnchor(pane, 0.0);
+//                        main_pane.setTopAnchor(pane, 0.0);
+//                        main_pane.setRightAnchor(pane, 0.0);
+//                        main_pane.setLeftAnchor(pane, 0.0);
                         new FadeIn(main_pane).play();
 
                         check = 1;
@@ -282,18 +354,18 @@ public class MainWindowController implements Initializable {
 
                 txt.setText("Management Panel");
                 mouseClicks(check);
-                afterClick(management_txt, management_image, "../Images/admin_settings_.png");
+                afterClick(management_txt, management_image, "Images/admin_settings_.png");
 
                 try{
                     if(check != 2){
-                        Parent root = FXMLLoader.load(getClass().getResource("../FXML/management.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("FXML/management.fxml"));
                         root.setStyle("-fx-background-color: #f3f3f3");
                         main_pane.getChildren().remove(pane);
                         main_pane.getChildren().add(root);
-                        main_pane.setBottomAnchor(root, 0.0);
-                        main_pane.setTopAnchor(root, 0.0);
-                        main_pane.setRightAnchor(root, 0.0);
-                        main_pane.setLeftAnchor(root, 0.0);
+//                        main_pane.setBottomAnchor(root, 0.0);
+//                        main_pane.setTopAnchor(root, 0.0);
+//                        main_pane.setRightAnchor(root, 0.0);
+//                        main_pane.setLeftAnchor(root, 0.0);
                         new FadeIn(main_pane).play();
 
                         check = 2;
@@ -312,18 +384,18 @@ public class MainWindowController implements Initializable {
 
                 txt.setText("Management Panel");
                 mouseClicks(check);
-                afterClick(management_txt, management_image, "../Images/admin_settings_.png");
+                afterClick(management_txt, management_image, "Images/admin_settings_.png");
 
                 try{
                     if(check != 2){
-                        Parent root = FXMLLoader.load(getClass().getResource("../FXML/management.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("FXML/management.fxml"));
                         root.setStyle("-fx-background-color: #f3f3f3");
                         main_pane.getChildren().remove(pane);
                         main_pane.getChildren().add(root);
-                        main_pane.setBottomAnchor(root, 0.0);
-                        main_pane.setTopAnchor(root, 0.0);
-                        main_pane.setRightAnchor(root, 0.0);
-                        main_pane.setLeftAnchor(root, 0.0);
+//                        main_pane.setBottomAnchor(root, 0.0);
+//                        main_pane.setTopAnchor(root, 0.0);
+//                        main_pane.setRightAnchor(root, 0.0);
+//                        main_pane.setLeftAnchor(root, 0.0);
                         new FadeIn(main_pane).play();
 
                         check = 2;
@@ -345,18 +417,18 @@ public class MainWindowController implements Initializable {
 
                 txt.setText("Report");
                 mouseClicks(check);
-                afterClick(report_txt, report_image, "../Images/business_report_.png");
+                afterClick(report_txt, report_image, "Images/business_report_.png");
 
                 try{
                     if(check != 3){
-                        Parent root = FXMLLoader.load(getClass().getResource("../FXML/report.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("FXML/report.fxml"));
                         root.setStyle("-fx-background-color: #f3f3f3");
                         main_pane.getChildren().remove(pane);
                         main_pane.getChildren().add(root);
-                        main_pane.setBottomAnchor(root, 0.0);
-                        main_pane.setTopAnchor(root, 0.0);
-                        main_pane.setRightAnchor(root, 0.0);
-                        main_pane.setLeftAnchor(root, 0.0);
+//                        main_pane.setBottomAnchor(root, 0.0);
+//                        main_pane.setTopAnchor(root, 0.0);
+//                        main_pane.setRightAnchor(root, 0.0);
+//                        main_pane.setLeftAnchor(root, 0.0);
                         new FadeIn(main_pane).play();
 
                         check = 3;
@@ -375,18 +447,18 @@ public class MainWindowController implements Initializable {
 
                 txt.setText("Report");
                 mouseClicks(check);
-                afterClick(report_txt, report_image, "../Images/business_report_.png");
+                afterClick(report_txt, report_image, "Images/business_report_.png");
 
                 try{
                     if(check != 3){
-                        Parent root = FXMLLoader.load(getClass().getResource("../FXML/report.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("FXML/report.fxml"));
                         root.setStyle("-fx-background-color: #f3f3f3");
                         main_pane.getChildren().remove(pane);
                         main_pane.getChildren().add(root);
-                        main_pane.setBottomAnchor(root, 0.0);
-                        main_pane.setTopAnchor(root, 0.0);
-                        main_pane.setRightAnchor(root, 0.0);
-                        main_pane.setLeftAnchor(root, 0.0);
+//                        main_pane.setBottomAnchor(root, 0.0);
+//                        main_pane.setTopAnchor(root, 0.0);
+//                        main_pane.setRightAnchor(root, 0.0);
+//                        main_pane.setLeftAnchor(root, 0.0);
                         new FadeIn(main_pane).play();
 
                         check = 3;
@@ -407,7 +479,7 @@ public class MainWindowController implements Initializable {
             public void handle(MouseEvent event) {
                 mouseClicks(check);
                 check = 4;
-                afterClick(exit_txt, exit_image, "../Images/shutdown_.png");
+                afterClick(exit_txt, exit_image, "Images/shutdown_.png");
                 Platform.exit();
             }
         });
@@ -417,7 +489,7 @@ public class MainWindowController implements Initializable {
             public void handle(MouseEvent event) {
                 mouseClicks(check);
                 check = 4;
-                afterClick(exit_txt, exit_image, "../Images/shutdown_.png");
+                afterClick(exit_txt, exit_image, "Images/shutdown_.png");
                 Platform.exit();
             }
         });

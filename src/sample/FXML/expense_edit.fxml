@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="516.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ExpenseEditController">
+    <children>
+        <Pane layoutX="13.0" layoutY="30.0" prefHeight="476.0" prefWidth="531.0" style="-fx-background-color: #ffffff;">
+            <effect>
+                <DropShadow />
+            </effect>
+            <children>
+                <JFXTextField fx:id="amount" focusColor="#ff4081" labelFloat="true" layoutX="291.0" layoutY="95.0" prefHeight="25.0" prefWidth="177.0" promptText="amount" />
+                <JFXDatePicker fx:id="datePicker" defaultColor="#ff4081" editable="false" layoutX="27.0" layoutY="313.0" prefHeight="25.0" prefWidth="228.0" promptText="Date" />
+                <JFXButton fx:id="earning_btn" buttonType="RAISED" layoutX="196.0" layoutY="393.0" onAction="#editExpense" prefHeight="39.0" prefWidth="130.0" style="-fx-background-color: #00BCD4;" text="Submit" textFill="WHITE" />
+                <JFXTextField fx:id="earning_name" focusColor="#ff4081" labelFloat="true" layoutX="57.0" layoutY="95.0" prefHeight="25.0" prefWidth="177.0" promptText="expense name" />
+                <JFXTextArea fx:id="description" focusColor="#ff4081" labelFloat="true" layoutX="28.0" layoutY="172.0" prefHeight="91.0" prefWidth="474.0" promptText="Description" />
+              <Pane layoutX="181.0" layoutY="-19.0" opacity="0.77" prefHeight="39.0" prefWidth="169.0" style="-fx-background-color: #00BCD4;">
+                  <children>
+                      <Label layoutX="55.0" layoutY="6.0" text="Expense" textFill="WHITE">
+                          <font>
+                              <Font size="18.0" />
+                          </font>
+                      </Label>
+                  </children>
+              </Pane>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

@@ -1,4 +1,4 @@
-package sample.Controllers;
+package sample;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
@@ -21,9 +21,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import org.controlsfx.control.textfield.CustomTextField;
 import org.json.JSONException;
 import org.json.JSONObject;
-import sample.Handlers.DatabaseHandler; 
+import sample.Handlers.Checker;
+import sample.Handlers.DatabaseHandler;
 import sample.Objects.User;
 
 import java.net.URL;
@@ -39,7 +41,7 @@ public class ManagementController implements Initializable {
     @FXML
     JFXComboBox role_box;
     @FXML
-    Label user_alert_txt;
+    Label user_rows_txt;
 
     @FXML
     TableColumn<User, String> name_col;
@@ -53,6 +55,8 @@ public class ManagementController implements Initializable {
     TableColumn<User, String> uid_col;
     @FXML
     TableView<User> users_table;
+    @FXML
+    CustomTextField usersfieldSearch;
 
     ObservableList<User> users;
 
@@ -68,7 +72,6 @@ public class ManagementController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        user_alert_txt.setText("");
 
         male_btn.setToggleGroup(user_genderChoice);
         female_btn.setToggleGroup(user_genderChoice);
@@ -93,8 +96,35 @@ public class ManagementController implements Initializable {
             }
         });
 
+        user_rows_txt.setText("");
+
         initializeViewUsers();
 
+    }
+
+    public void searchUser() {
+        if (!usersfieldSearch.getText().isEmpty()) {
+            ObservableList<User> users = FXCollections.observableArrayList();
+
+            try{
+                for (User user : db.getUsers(LoginController.userObject.getString("role"))) {
+                    if (user.getName().toLowerCase().contains(usersfieldSearch.getText())) {
+                        users.add(user);
+                    }
+                }
+                setUpUserTable();
+                users_table.setItems(null);
+                users_table.setItems(users);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+        }else
+            initializeViewUsers();
+    }
+
+    public void refreshUsers(){
+        initializeViewUsers();
     }
 
     public void setUpUserTable() {
@@ -117,23 +147,22 @@ public class ManagementController implements Initializable {
                                     final ImageView statusImage;
                                     User user = getTableView().getItems().get(getIndex());
                                     if (user.getStatus().equals("active")) {
-                                        statusImage = new ImageView(new Image(getClass().getResource("../Images/denieduser.png").toString(), true));
-                                        user_status = "block";
+                                        statusImage = new ImageView(new Image(getClass().getResource("Images/denieduser.png").toString(), true));
+                                        user_status = "Block";
                                     } else {
-                                        statusImage = new ImageView(new Image(getClass().getResource("../Images/accepteduser.png").toString(), true));
-                                        user_status = "activate";
+                                        statusImage = new ImageView(new Image(getClass().getResource("Images/accepteduser.png").toString(), true));
+                                        user_status = "Activate";
                                     }
-
 //                                    final ImageView statusImage = viewImage1;
 
                                     statusImage.setFitHeight(29.5);
                                     statusImage.setFitWidth(29.5);
 
-                                    ImageView deleteImage = new ImageView(new Image(getClass().getResource("../Images/delete.png").toString(), true));
+                                    ImageView deleteImage = new ImageView(new Image(getClass().getResource("Images/delete.png").toString(), true));
                                     deleteImage.setFitHeight(24);
                                     deleteImage.setFitWidth(24);
 
-                                    ImageView editImage = new ImageView(new Image(getClass().getResource("../Images/edt.png").toString(), true));
+                                    ImageView editImage = new ImageView(new Image(getClass().getResource("Images/edt.png").toString(), true));
                                     editImage.setFitHeight(24);
                                     editImage.setFitWidth(24);
 
@@ -207,10 +236,15 @@ public class ManagementController implements Initializable {
                                     statusImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                         @Override
                                         public void handle(MouseEvent event) {
+                                            if(user.getStatus().toLowerCase().equals("active")){
+                                                user_status = "block";
+                                            }else{
+                                                user_status = "activate";
+                                            }
                                             User user = getTableView().getItems().get(getIndex());
                                             DatabaseHandler db = new DatabaseHandler();
-                                            db.updateUserStatus(user_status, Integer.parseInt(user.getUser_no().substring(5)));
-                                            System.out.println(user.getUser_no());
+                                            db.updateUserStatus(user_status.toLowerCase(), Integer.parseInt(user.getUser_no().substring(5)));
+                                            System.out.println(user.getUser_no().substring(5));
                                             initializeViewUsers();
                                         }
                                     });
@@ -241,7 +275,7 @@ public class ManagementController implements Initializable {
                                     });
 
                                     HBox hBox = new HBox();
-                                    hBox.getChildren().addAll(editImage, deleteImage, statusImage);
+                                    hBox.getChildren().addAll(deleteImage, statusImage);
                                     hBox.setAlignment(Pos.CENTER);
                                     hBox.setSpacing(12);
                                     setGraphic(hBox);
@@ -373,7 +407,8 @@ public class ManagementController implements Initializable {
         users_table.setItems(null);
         try {
 //            System.out.println(userObject.getString("role"));
-            users_table.setItems(db.getUsers("Main Admin"));
+            users_table.setItems(db.getUsers(LoginController.userObject.getString("role")));
+            user_rows_txt.setText(String.valueOf(db.getUsers(LoginController.userObject.getString("role")).size()));
         } catch (Exception e) {
             e.printStackTrace();
         }

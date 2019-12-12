@@ -1,4 +1,4 @@
-package sample.Controllers;
+package sample;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,10 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.json.JSONException;
@@ -18,6 +20,8 @@ import org.json.JSONObject;
 import sample.Handlers.Checker;
 import sample.Handlers.DatabaseHandler;
 import sample.Objects.LoginResult;
+
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -62,13 +66,23 @@ public class LoginController implements Initializable {
                         try{
                             userObject = result.userCredentials;
                             if(userObject.get("status").equals("active")){
+//                                GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+//                                int width = gd.getDisplayMode().getWidth();
+//                                int height = gd.getDisplayMode().getHeight();
                                 System.out.println(userObject.get("status").toString());
                                 System.out.println(userObject.get("fname").toString());
+//                                action_txt.setText("It reaches here before");
                                 Stage stage = (Stage) login_btn.getScene().getWindow();
-                                AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("../FXML/main_window.fxml"));
-                                Scene MainScene = new Scene(anchorPane);
+                                action_txt.setText("It reaches here before before");
+                                action_txt.setVisible(true);
+                                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML/main_window.fxml"));
+                                action_txt.setText("It reaches here");
+                                action_txt.setVisible(true);
                                 stage.setTitle("Business Inventory System");
-                                stage.setScene(MainScene);
+                                stage.setScene(new Scene(fxmlLoader.load(), 1600, 900));
+                                action_txt.setText("It reaches here after");
+                                action_txt.setVisible(true);
+                                stage.centerOnScreen();
                                 stage.setMaximized(true);
                                 stage.show();
                                 stage.setResizable(true);
@@ -80,8 +94,16 @@ public class LoginController implements Initializable {
 
                         }catch (IOException e){
                             e.printStackTrace();
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning Dialog");
+                            alert.setHeaderText(null);
+                            alert.setContentText(e.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Warning Dialog");
+                            alert.setHeaderText(null);
+                            alert.setContentText(e.toString());
                         }
                     }else {
                         action_txt.setText("Please check your login credentials");

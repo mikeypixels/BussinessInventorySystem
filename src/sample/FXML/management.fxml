@@ -5,19 +5,19 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 <?import org.controlsfx.control.textfield.CustomTextField?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<AnchorPane prefHeight="828.0" prefWidth="1137.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.ManagementController">
+
+<AnchorPane prefHeight="828.0" prefWidth="1137.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ManagementController">
     <JFXTabPane prefHeight="773" prefWidth="1128" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
             <Tab text="Users">
@@ -112,7 +112,7 @@
                                                     <Font name="System Bold" size="16.0" />
                                                 </font>
                                             </Label>
-                                            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="553.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="54.0">
+                                            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="553.0" layoutY="14.0" onMouseClicked="#refreshUsers" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="54.0">
                                                 <image>
                                                     <Image url="@../Images/reload_c.png" />
                                                 </image>
@@ -120,7 +120,7 @@
                                                     <DropShadow color="#000000b2" height="15.0" offsetY="2.0" radius="7.0" width="15.0" />
                                                 </effect>
                                             </ImageView>
-                                            <ImageView fitHeight="17.0" fitWidth="18.0" layoutX="562.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="63.0">
+                                            <ImageView fitHeight="17.0" fitWidth="18.0" layoutX="562.0" layoutY="23.0" onMouseClicked="#refreshUsers" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="63.0">
                                                 <image>
                                                     <Image url="@../Images/reload_icon.png" />
                                                 </image>
@@ -138,11 +138,11 @@
                                         <font>
                                             <Font name="System Bold" size="16.0" />
                                         </font></Label>
-                                    <Label layoutX="173.0" layoutY="25.0" text="20" AnchorPane.leftAnchor="173.0">
+                                    <Label fx:id="user_rows_txt" layoutX="173.0" layoutY="25.0" text="20" AnchorPane.leftAnchor="173.0">
                                         <font>
                                             <Font name="System Bold" size="16.0" />
                                         </font></Label>
-                                    <CustomTextField fx:id="usfieldSearch" layoutX="418.0" layoutY="18.0" prefHeight="32.0" prefWidth="252.0" styleClass="searchField" AnchorPane.rightAnchor="30.0">
+                                    <CustomTextField fx:id="usfieldSearch" layoutX="324.0" layoutY="18.0" prefHeight="32.0" prefWidth="252.0" styleClass="searchField" AnchorPane.rightAnchor="163.0">
                                         <left>
                                             <Label styleClass="searchBoxLabel">
                                                 <graphic>
@@ -151,6 +151,11 @@
                                             </Label>
                                         </left>
                                     </CustomTextField>
+                           <JFXButton fx:id="user_search" buttonType="RAISED" layoutY="14.0" onAction="#searchUser" prefHeight="41.0" prefWidth="122.0" style="-fx-background-color: #45c7fb; -fx-background-radius: 40;" text="Search" textFill="WHITE" AnchorPane.rightAnchor="33.0">
+                              <font>
+                                 <Font name="System Bold" size="12.0" />
+                              </font>
+                           </JFXButton>
 
                                 </children>
                             </AnchorPane>

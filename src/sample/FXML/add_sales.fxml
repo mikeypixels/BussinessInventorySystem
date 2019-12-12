@@ -11,33 +11,38 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="628.0" prefWidth="375.0" style="-fx-background-radius: 10px; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AddSales">
+<AnchorPane prefHeight="628.0" prefWidth="375.0" style="-fx-background-radius: 10px; -fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AddSales">
    <children>
       <AnchorPane layoutX="23.0" layoutY="-39.0" opacity="0.92" prefHeight="79.0" prefWidth="283.0" style="-fx-background-color: #45c7fb; -fx-background-radius: 5px;">
          <effect>
             <DropShadow color="#00000045" height="10.0" offsetY="1.0" radius="4.5" width="10.0" />
          </effect>
          <children>
-            <Label alignment="CENTER" layoutY="21.0" prefHeight="27.0" prefWidth="283.0" text="Sales" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Label fx:id="header_txt" alignment="CENTER" layoutY="21.0" prefHeight="27.0" prefWidth="283.0" text="Sales" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <JFXTextField fx:id="sale_quantity" focusColor="#ff4284cc" layoutX="41.0" layoutY="263.0" prefHeight="25.0" prefWidth="292.0" promptText="Quantity" style="-fx-background-color: #ffffff;" unFocusColor="#b9b9b9" />
-      <JFXTextField fx:id="sale_amount" focusColor="#ff4081cc" layoutX="41.0" layoutY="338.0" prefHeight="25.0" prefWidth="292.0" promptText="Amount" style="-fx-background-color: #ffffff;" unFocusColor="#b9b9b9" />
-      <JFXDatePicker fx:id="sale_date" defaultColor="#ff4081cc" layoutX="42.0" layoutY="407.0" prefHeight="25.0" prefWidth="299.0" promptText="Date" />
-      <JFXButton buttonType="RAISED" layoutX="66.0" layoutY="556.0" prefHeight="49.0" prefWidth="250.0" style="-fx-background-color: #45c7fb; -fx-background-radius: 40;" text="Submit" textFill="WHITE">
+      <JFXTextField fx:id="sale_quantity" focusColor="#ff4284cc" layoutX="41.0" layoutY="333.0" prefHeight="25.0" prefWidth="292.0" promptText="Quantity" style="-fx-background-color: #ffffff;" unFocusColor="#b9b9b9" />
+      <JFXTextField fx:id="sale_amount" focusColor="#ff4081cc" layoutX="41.0" layoutY="408.0" prefHeight="25.0" prefWidth="292.0" promptText="Amount" style="-fx-background-color: #ffffff;" unFocusColor="#b9b9b9" />
+      <JFXDatePicker fx:id="sale_date" defaultColor="#ff4081cc" editable="false" layoutX="42.0" layoutY="477.0" prefHeight="25.0" prefWidth="299.0" promptText="Date" />
+      <JFXButton fx:id="sale_submit" buttonType="RAISED" layoutX="66.0" layoutY="556.0" onAction="#addSale" prefHeight="49.0" prefWidth="250.0" style="-fx-background-color: #45c7fb; -fx-background-radius: 40;" text="Submit" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="sale_category" focusColor="#ff4081" layoutX="83.0" layoutY="92.0" prefHeight="25.0" prefWidth="210.0" />
-      <JFXComboBox fx:id="sale_sub_category" focusColor="#ff4081" layoutX="82.0" layoutY="164.0" prefHeight="25.0" prefWidth="210.0" promptText="select sub category" />
+      <JFXComboBox fx:id="sale_category" focusColor="#ff4081" layoutX="83.0" layoutY="162.0" prefHeight="25.0" prefWidth="210.0" />
+      <JFXComboBox fx:id="sale_sub_category" focusColor="#ff4081" layoutX="82.0" layoutY="234.0" prefHeight="25.0" prefWidth="210.0" promptText="select sub category" />
       <ImageView fx:id="back_arrow" fitHeight="39.0" fitWidth="56.0" layoutX="14.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/arrow_back.png" />
          </image></ImageView>
+      <Label fx:id="av_quantity" alignment="CENTER" layoutY="111.0" prefHeight="17.0" prefWidth="375.0" text="Available quantity" textAlignment="CENTER">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
